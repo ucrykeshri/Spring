@@ -3,6 +3,8 @@ package AngularBackend.AngularBackend.Controllers;
 import AngularBackend.AngularBackend.Entity.Food;
 import AngularBackend.AngularBackend.Repository.FoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -26,7 +28,13 @@ public class Controllers {
     }
 
     @PostMapping("/add-new-fooditem")
-    public List<Food> AddFood(@RequestBody Food food){
-        return (List<Food>) foodRepository.save(food);
+    public ResponseEntity<String> addFood(@RequestBody Food food) {
+        try {
+            foodRepository.save(food);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Food Added Successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while adding food item");
+        }
     }
 }
