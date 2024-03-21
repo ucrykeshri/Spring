@@ -20,9 +20,9 @@ public class Food {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int foofId;
+    int foodId;
     String name;
-    int price;
+    double price;
     double discount;
     String reviews;
     String recipie;
